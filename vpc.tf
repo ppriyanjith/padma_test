@@ -58,7 +58,7 @@ resource "aws_route_table_association" "padma-web-public-rt-asso" {
   route_table_id = "${aws_route_table.padma-web-public-rt.id}"
 }
 # Define the security group for public subnet
-resource "aws_security_group" "padma_sgweb" {
+resource "aws_security_group" "padma-sgweb" {
   name = "padma_vpc_test_web"
   description = "Allow incoming HTTP connections & SSH access"
 
