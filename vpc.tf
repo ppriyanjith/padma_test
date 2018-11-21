@@ -1,5 +1,5 @@
 # Define our VPC
-resource "padma_aws_vpc" "default" {
+resource "aws_vpc" "padma-vpc" {
   cidr_block = "${var.vpc_cidr}"
   enable_dns_hostnames = true
 
@@ -9,38 +9,38 @@ resource "padma_aws_vpc" "default" {
 }
 
 # Define the public subnet
-resource "aws_subnet" "padma_public-subnet" {
-  vpc_id = "${aws_vpc.default.id}"
+resource "aws_subnet" "padma-public-subnet" {
+  vpc_id = "${aws_vpc.padma-vpc.id}"
   cidr_block = "${var.public_subnet_cidr}"
   availability_zone = "us-east-1a"
 
   tags {
-    Name = "padma_Web Public Subnet"
+    Name = "padma-Web Public Subnet"
   }
 }
 
 # Define the private subnet
-resource "aws_subnet" "padma_private-subnet" {
-  vpc_id = "${aws_vpc.default.id}"
+resource "aws_subnet" "padma-private-subnet" {
+  vpc_id = "${aws_vpc.padma-vpc.id}"
   cidr_block = "${var.private_subnet_cidr}"
   availability_zone = "us-east-1b"
 
   tags {
-    Name = "padma_Private Subnet"
+    Name = "padma-Private Subnet"
   }
 }
 
 # Define the internet gateway
-resource "aws_internet_gateway" "padma_gw" {
-  vpc_id = "${aws_vpc.default.id}"
+resource "aws_internet_gateway" "padma-gw" {
+  vpc_id = "${aws_vpc.padma-vpc.id}"
 
   tags {
-    Name = "padma_VPC IGW"
+    Name = "padma-VPC IGW"
   }
 }
 # Define the route table
-resource "aws_route_table" "padma_web-public-rt" {
-  vpc_id = "${aws_vpc.default.id}"
+resource "aws_route_table" "padma-web-public-rt" {
+  vpc_id = "${aws_vpc.padma-vpc.id}"
 
   route {
     cidr_block = "0.0.0.0/0"
@@ -48,14 +48,14 @@ resource "aws_route_table" "padma_web-public-rt" {
   }
 
   tags {
-    Name = "padma_Public Subnet RT"
+    Name = "padma-Public Subnet RT"
   }
 }
 
 # Assign the route table to the public Subnet
-resource "aws_route_table_association" "padma_web-public-rt-asso" {
-  subnet_id = "${aws_subnet.public-subnet.id}"
-  route_table_id = "${aws_route_table.web-public-rt.id}"
+resource "aws_route_table_association" "padma-web-public-rt-asso" {
+  subnet_id = "${aws_subnet.padma-public-subnet.id}"
+  route_table_id = "${aws_route_table.padma-web-public-rt.id}"
 }
 # Define the security group for public subnet
 resource "aws_security_group" "padma_sgweb" {
