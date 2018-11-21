@@ -1,9 +1,3 @@
-# Define SSH key pair for our instances
-resource "aws_key_pair" "padma_key" {
-  key_name = "My_new_private_pearson_usest1"
-  #public_key = "${file("${var.key_path}")}"
-}
-
 # Define webserver inside the public subnet
 resource "aws_instance" "wb" {
    ami  = "${var.ami}"
