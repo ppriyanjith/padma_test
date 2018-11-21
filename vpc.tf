@@ -90,7 +90,7 @@ resource "aws_security_group" "padma_sgweb" {
     cidr_blocks =  ["0.0.0.0/0"]
   }
 
-  vpc_id="${aws_vpc.default.id}"
+  vpc_id="${aws_vpc.padma-vpc.id}"
 
   tags {
     Name = "Web Server SG"
@@ -122,7 +122,7 @@ resource "aws_security_group" "padma_sgdb"{
     cidr_blocks = ["${var.public_subnet_cidr}"]
   }
 
-  vpc_id = "${aws_vpc.default.id}"
+  vpc_id = "${aws_vpc.padma-vpc.id}"
 
   tags {
     Name = "DB SG"
